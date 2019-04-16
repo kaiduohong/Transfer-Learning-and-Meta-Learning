@@ -1,0 +1,10 @@
+.idea/
+*~
+*/*~
+code/.DS_Store
+.DS_Store
+*.mat
+*.png
+*.jpg
+*.jpeg
+
