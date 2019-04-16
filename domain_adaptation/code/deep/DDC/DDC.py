@@ -6,7 +6,7 @@ sys.path.append('.')
 
 import argparse
 import torch
-import torch.nn.functional as F
+import torch.nn.functional as tch_fun
 import torch.optim as optim
 from torch.autograd import Variable
 import os
@@ -83,7 +83,7 @@ def train(epoch, model):
 
         optimizer.zero_grad()
         label_source_pred, loss_mmd = model(data_source, data_target)
-        loss_cls = F.nll_loss(F.log_softmax(label_source_pred, dim=1), label_source)
+        loss_cls = tch_fun.nll_loss(tch_fun.log_softmax(label_source_pred, dim=1), label_source)
         _lambda = 2 / (1 + math.exp(-10 * (epoch) / epochs)) - 1
         loss = loss_cls + _lambda * loss_mmd
         loss.backward()
