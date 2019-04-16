@@ -1,7 +1,9 @@
+from __future__ import print_function
 import sys
 sys.path.append('.')
 
-from __future__ import print_function
+
+
 import argparse
 import torch
 import torch.nn.functional as F
@@ -19,12 +21,12 @@ from common import setting
 batch_size = 32
 epochs = 200
 lr = 0.01
-momentum = 0.9
+MOMEMTOM = 0.9
 no_cuda =False
 seed = 8
 log_interval = 10
-l2_decay = 5e-4
-root_path = setting.DATA_ROOT
+L2_DECAY = 5e-4
+root_path = os.path.jont(setting.DATA_ROOT,'office-31','images')
 source_name = "amazon"
 target_name = "webcam"
 
@@ -61,7 +63,7 @@ def train(epoch, model):
     optimizer = torch.optim.SGD([
         {'params': model.sharedNet.parameters()},
         {'params': model.cls_fc.parameters(), 'lr': LEARNING_RATE},
-        ], lr=LEARNING_RATE / 10, momentum=momentum, weight_decay=l2_decay)
+        ], lr=LEARNING_RATE / 10, momentum=MOMEMTOM, weight_decay=L2_DECAY)
 
     model.train()
 
