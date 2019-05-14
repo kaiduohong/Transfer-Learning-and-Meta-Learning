@@ -2,10 +2,14 @@
 import os
 import sys
 sys.path.append(os.path.dirname(__file__))
+sys.path.append('..')
+sys.path.append(os.path.dirname('..'))
+
+
 import torch
 
 
-from common import data_utils, model_utils, utils, train, eval
+from Transfer_Learning_and_Meta_Learning.common import data_utils, model_utils, utils, train, eval
 from few_shot_learning.common import config
 
 
