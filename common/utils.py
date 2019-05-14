@@ -85,3 +85,21 @@ def kernel(ker, X, X2, gamma=None):
             D = np.dot(X.T, X2)
         K = np.exp(-gamma * np.arccos(D) ** 2)
     return K
+
+def euclidean_dist(x, y):
+    '''
+    :param x:  torch tensor of size N x D
+    :param y: torch tensor of size M x D
+    :return: euclidean between pair of x and y
+    '''
+    # y: M x D
+    n = x.size(0)
+    m = y.size(0)
+    d = x.size(1)
+    assert d == y.size(1)
+    # n * 1 * d to n * m * d
+    x = x.unsqueeze(1).expand(n, m, d)
+    #1 * m * d to n * m * d
+    y = y.unsqueeze(0).expand(n, m, d)
+
+    return torch.pow(x - y, 2).sum(2)
