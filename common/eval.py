@@ -4,7 +4,8 @@ import math
 import torch
 import torchnet as tnt
 
-from common import data_utils, model_utils
+from common import data_utils, model_utils,log_utils
+
 
 def eval(net, test_dataloader, logger, args):
     net.eval()
@@ -15,6 +16,10 @@ def eval(net, test_dataloader, logger, args):
     meters = { field: tnt.meter.AverageValueMeter() for field in args.trace_field }
 
     model_utils.evaluate(net, test_dataloader['test'], meters, desc="test")
+
+    meter_vals = log_utils.extract_meter_values(meters)
+
+    logger.save_trace(meter_vals, 'test' + args.trace_filename)
 
     for field,meter in meters.items():
         mean, std = meter.value()
