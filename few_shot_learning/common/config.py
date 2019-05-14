@@ -22,7 +22,9 @@ class arguments(object):
         '''
         #if use cuda
         self.cuda = torch.cuda.is_available()
+        self.cuda_devide = 1
         self.multigpu = False
+        self.random_seed = 1234
 
         #data args
         #self.resplit = False

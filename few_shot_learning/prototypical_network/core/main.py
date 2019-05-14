@@ -15,10 +15,12 @@ def main():
     net = model_utils.load(args)
     args.optim_config = {'lr': args.learning_rate,
      'weight_decay': args.weight_decay}
-
-    torch.manual_seed(1234)
     if args.cuda:
-        torch.cuda.manual_seed(1234)
+        os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_devide
+
+    torch.manual_seed(args.random_seed)
+    if args.cuda:
+        torch.cuda.manual_seed(args.random_seed)
         net = net.cuda()
 
     train_dataloader = data_utils.dataloader('train')
