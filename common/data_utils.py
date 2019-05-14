@@ -1,5 +1,22 @@
 import torch
 
+
+def get_dataloader(args):
+    if args.dataset == 'omniglot':
+        import omniglot_loader
+        loader = omniglot_loader
+    else:
+        raise ValueError("Unknown dataset: {:s}".format(args.dataset))
+
+    if args.state == 'train':
+        if args.dataset == 'omniglot':
+            data = loader.load(args, args.splits)
+    else:
+        data = loader.load(args, ['test'])
+
+    return data
+
+
 def convert_dict(k, v):
     return { k: v }
 

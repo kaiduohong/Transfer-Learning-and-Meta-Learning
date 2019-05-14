@@ -4,13 +4,17 @@ import sys
 sys.path.append(os.path.dirname(__file__))
 import torch
 
-from network import prototypical_net, train, test
-from common import config, data_utils, model_utils, utils
+
+from common import data_utils, model_utils, utils, train, eval
+from few_shot_learning.common import config
+
 
 def main():
-    logger = utils.LogManager()
     args = config.arguments()
+    logger = utils.LogManager(args)
     net = model_utils.load(args)
+    args.optim_config = {'lr': args.learning_rate,
+     'weight_decay': args.weight_decay}
 
     torch.manual_seed(1234)
     if args.cuda:
@@ -21,11 +25,11 @@ def main():
     test_dataloader = data_utils.dataloader('test')
 
     print('begin training')
-    train(net, train_dataloader, logger)
+    train.train(net, train_dataloader, logger, args)
     print('end training\n\n')
 
     print('begin eval')
-    eval(net,test_dataloader,logger)
+    eval.eval(net, test_dataloader, logger, args)
     print('end eval')
 
 if __name__ == '__main__':

@@ -1,11 +1,11 @@
 import os
 import torch
 import threading
+from Transfer_Learning_and_Meta_Learning.common.settiing import BASE_ROOT, DATA_ROOT
 
-BASE_ROOT = os.path.dirname(os.path.dirname(__file__))
-DATA_ROOT = os.path.join(BASE_ROOT, 'data')
-MODEL_ROOT = os.path.join(BASE_DIR,'model')
-LOG_ROOT = os.path.join(BASE_DIR,'logs')
+FEW_SHOT_LEARNING_BASE_ROOT = os.path.dirname(os.path.dirname(__file__)) #few_shot_learning
+MODEL_ROOT = os.path.join(BASE_ROOT,'model')
+LOG_ROOT = os.path.join(BASE_ROOT,'logs')
 
 #uses a class instead of using parser
 class arguments(object):
@@ -22,14 +22,14 @@ class arguments(object):
         '''
         #if use cuda
         self.cuda = torch.cuda.is_available()
-        self.multigpu = True
+        self.multigpu = False
 
         #data args
         #self.resplit = False
         self.dataset = 'omniglot'
-        self.split_path = os.path.join(BASE_ROOT, self.dataset, 'splits')
+        self.dataset_path = os.path.join(DATA_ROOT, self.dataset)
+        self.split_path = os.path.join(self.dataset_path, 'splits')
         self.splits = 'vinyals'
-        self.dataset_path = os.path.join(BASE_ROOT, self.dataset)
         self.sequential = False
         self.train_way = 60
         self.train_shot = 5
@@ -58,11 +58,17 @@ class arguments(object):
         self.patient = 1000
 
         #log args
-        res_dir = os.path.join(BASE_ROOT, 'results')
+        res_dir = os.path.join(FEW_SHOT_LEARNING_BASE_ROOT, 'results')
         self.models_dir = os.path.join(res_dir,'models')
         self.logs_dir =  os.path.join(res_dir, 'logs')
         self.trace_fields = ['loss','accuracy']
         self.trace_dir = os.path.join(res_dir,'traces')
+
+        self.model_filename = self.model_name + '.pht'
+        self.log_filename = 'log.txt'
+        self.trace_filename = 'trace.json'
+
+
 
     # sigleton
     def __new__(cls, *args, **kwargs):

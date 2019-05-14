@@ -10,7 +10,7 @@ from base.engine import Engine
 from common import model_utils, log_utils
 
 def train(network, dataloader, logger, args):
-    logger.save_opt()
+    logger.save_opt(args)
 
     if args.trainval:
         train_loader = dataloader['trainval']
@@ -62,7 +62,7 @@ def train(network, dataloader, logger, args):
         meter_vals = log_utils.extract_meter_values(meters)
         print("Epoch {:02d}: {:s}".format(state['epoch'], log_utils.render_meter_values(meter_vals)))
         meter_vals['epoch'] = state['epoch']
-        logger.save_trace(meter_vals)
+        logger.save_trace(meter_vals, 'train'+args.trace_filename)
 
         if val_loader is not None:
             if meter_vals['val']['loss'] < hook_state['best_loss']:
@@ -83,7 +83,7 @@ def train(network, dataloader, logger, args):
                     state['stop'] = True
         else:
             state['model'].cpu()
-            logger.save_model(state['model'], 'best_model.pt')
+            logger.save_model(state['model'], args.model_filename)
             if args.cuda:
                 state['model'].cuda()
 
@@ -93,8 +93,7 @@ def train(network, dataloader, logger, args):
         model=network,
         loader=train_loader,
         optim_method=args.optim_method,
-        optim_config={'lr': args.learning_rate,
-                      'weight_decay': args.weight_decay},
+        optim_config=args.optim_config,
         max_epoch=args.train_epoches
     )
 

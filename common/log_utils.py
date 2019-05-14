@@ -1,14 +1,19 @@
 import torch
 import time
-import logging
 import os
 import sys
 import json
-from common import config
+
+
 
 class LogManager(object):
-    def __init__(self):
-        log_filename = os.path.join(config.logs_dir,'eval-{}'.format(self.cur_time()))
+    def __init__(self,args):
+        self.logs_dir = args.logs_dir
+        self.models_dir = args.models_dir
+        self.trace_file = os.path.join(args.trace_dir, '{}-{}-trace.json'
+                                       .format(self.cur_time(),args.trace_filename))
+
+        log_filename = os.path.join(self.logs_dir, 'eval-{}'.format(self.cur_time()))
         log_format = '%(asctime)s %(message)s'
         logging.basicConfig(stream=sys.stdout, level=logging.INFO,
                             format=log_format, datefmt='%m/%d %I:%M:%S %p')
@@ -16,12 +21,13 @@ class LogManager(object):
         fh.setFormatter(logging.Formatter(log_format))
         logging.getLogger().addHandler(fh)
 
-        self.models_dir = config.models_dir
-        self.trace_file = os.path.join(config.trace_dir, '{}-trace.json'
-                                       .format(self.cur_time()))
+    def reset(self):
+        if(os.path.exists(self.logs_dir)):
+            os.removedirs(self.logs_dir)
+        os.mkdir(self.logs_dir)
 
     def save_model(self,model,model_name):
-        model_file = os.path.join(self.models_dir,'{}-'
+        model_file = os.path.join(self.models_dir,'{}-{}.pth'
                                   .format(self.cur_time()), model_name)
         torch.save(model.state_dict(), model_file)
 
@@ -33,12 +39,12 @@ class LogManager(object):
     def cur_time(self):
         return time.strftime("%Y%m%d-%H%M%S")
 
-    def save_opt(self):
-        opt = config.args.to_dict()
-        with open(os.path.join(config.args.logs_dir, 'opt.json'), 'w') as f:
+    def save_opt(self, opt):
+        if not isinstance(opt,dict):
+            opt = opt.to_dir
+        with open(os.path.join(self.logs_dir, '{}-opt.json'.format(self.cur_time())), 'w') as f:
             json.dump(opt, f)
             f.write('\n')
-        print('saved opt')
 
 
 

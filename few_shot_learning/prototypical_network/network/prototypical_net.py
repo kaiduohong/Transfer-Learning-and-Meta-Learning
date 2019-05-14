@@ -1,9 +1,8 @@
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
-from common.config import argument
+from few_shot_learning.common.config import args
 from common.utils import euclidean_dist
-import base
 
 
 @register_model('protonet_conv')
@@ -11,9 +10,9 @@ class ProtoNet(nn.Module):
     def __init__(self,opt=None):
         super(ProtoNet, self).__init__()
 
-        input_size = argument.input_size
-        hidden_size = argument.hidden_size
-        output_size = argument.output_size
+        input_size = args.input_size
+        hidden_size = args.hidden_size
+        output_size = args.output_size
 
         encoder = nn.Sequential(
             self.conv_block(input_size[0], hidden_size),

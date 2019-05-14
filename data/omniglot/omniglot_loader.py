@@ -6,14 +6,12 @@ from functools import partial
 
 import numpy as np
 from PIL import Image
-
 import torch
 from torchvision.transforms import ToTensor
 
 from torchnet.dataset import ListDataset, TransformDataset
 from torchnet.transform import compose
 
-import protonets
 from common.data_utils import convert_dict, CudaTransform, EpisodicBatchSampler, SequentialBatchSampler
 
 

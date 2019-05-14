@@ -1,6 +1,6 @@
 from tqdm import tqdm
 
-from protonets.utils import filter_opt
+
 from base import get_model
 
 def load(opt):
