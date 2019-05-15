@@ -1,4 +1,5 @@
 from tqdm import tqdm
+import torch
 
 class Engine(object):
     def __init__(self):
@@ -14,16 +15,17 @@ class Engine(object):
         state = {
             'model': kwargs['model'],
             'loader': kwargs['loader'],
-            'optim_method': kwargs['optim_method'],
+           'parameters': kwargs['parameters'] if 'parameters' in kwargs else kwargs['model'].parameters() ,
+           'optim_method': kwargs['optim_method'],
             'optim_config': kwargs['optim_config'],
             'max_epoch': kwargs['max_epoch'],
             'epoch': 0, # epochs done so far
             't': 0, # samples seen so far
             'batch': 0, # samples seen in current epoch
             'stop': False
-        }
+        } 
 
-        state['optimizer'] = state['optim_method'](state['model'].parameters(), **state['optim_config'])
+        exec("state['optimizer'] =  "+ state['optim_method'] + "(state['parameters'],**state['optim_config'])")
 
         self.hooks['on_start'](state)
         while state['epoch'] < state['max_epoch'] and not state['stop']:

@@ -54,9 +54,8 @@ class arguments(object):
         #train args
         #self.batch_size #in few shot learning, episode is used
         self.train_epoches = 10000
-        self.opt_method = 'Adam'
-        self.learning_rate = 0.001
-        self.weight_decay = 0.0
+        self.optim_method = 'torch.optim.Adam'
+        self.optim_config = { 'lr': 0.001,'weight_decay': 0.0} #other config should be set in main
         self.weight_decay_every = 20
         self.patient = 1000
 
@@ -88,9 +87,5 @@ class arguments(object):
                 print('dir {} is not exist and it is made now'.format(d))
 
     def to_dict(self):
-        d = {}
-        for k,v in vars(self):
-            d[k] = v
-        return d
-
+        return vars(self)
 args = arguments()

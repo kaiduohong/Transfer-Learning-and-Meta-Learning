@@ -1,5 +1,6 @@
 import torch
 import time
+import shutil
 import os
 import sys
 import json
@@ -23,16 +24,23 @@ class LogManager(object):
 
     def reset(self):
         if(os.path.exists(self.logs_dir)):
-            os.removedirs(self.logs_dir)
-        os.mkdir(self.logs_dir)
+            for f in os.listdir(self.logs_dir):
+                file_path = os.path.join(self.logs_dir,f)
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+                else:
+                    shutil.rmtree(file_path)
+        else:
+            os.mkdir(self.logs_dir)
 
     def save_model(self,model,model_name):
         model_file = os.path.join(self.models_dir,'{}-{}.pth'
                                   .format(self.cur_time()), model_name)
         torch.save(model.state_dict(), model_file)
 
-    def save_trace(self, meter_vals):
+    def save_trace(self, meter_vals, message=''):
         with open(self.trace_file, 'a') as f:
+            meter_vals['msg'] = message
             json.dump(meter_vals, f)
             f.write('\n')
 

@@ -13,7 +13,7 @@ def get_dataloader(args):
     if args.state == 'train':
         data = loader.loader(args)
     else:
-        data = loader.loader(args, ['test'])
+        data = loader.loader(args)
 
     return data
 

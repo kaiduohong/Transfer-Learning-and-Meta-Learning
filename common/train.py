@@ -21,14 +21,14 @@ def train(network, dataloader, logger, args):
 
     engine = Engine()
 
-    meters = {'train': {field: tnt.meter.AverageValueMeter() for field in args.fields}}
+    meters = {'train': {field: tnt.meter.AverageValueMeter() for field in args.trace_fields}}
 
     if val_loader is not None:
-        meters['val'] = {field: tnt.meter.AverageValueMeter() for field in args.fields}
+        meters['val'] = {field: tnt.meter.AverageValueMeter() for field in args.trace_fields}
 
     def on_start(state):
         logger.reset()
-        state['scheduler'] = lr_scheduler.StepLR(state['optimizer'], args.decay_every, gamma=0.5)
+        state['scheduler'] = lr_scheduler.StepLR(state['optimizer'], args.weight_decay_every, gamma=0.5)
 
     engine.hooks['on_start'] = on_start
 
@@ -62,7 +62,7 @@ def train(network, dataloader, logger, args):
         meter_vals = log_utils.extract_meter_values(meters)
         print("Epoch {:02d}: {:s}".format(state['epoch'], log_utils.render_meter_values(meter_vals)))
         meter_vals['epoch'] = state['epoch']
-        logger.save_trace(meter_vals, 'train'+args.trace_filename)
+        logger.save_trace(meter_vals, 'state=train')
 
         if val_loader is not None:
             if meter_vals['val']['loss'] < hook_state['best_loss']:

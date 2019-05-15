@@ -1,4 +1,5 @@
 import torch.nn as nn
+import torch
 import torch.nn.functional as F
 from torch.autograd import Variable
 from few_shot_learning.common.config import args
@@ -15,7 +16,7 @@ class ProtoNet(nn.Module):
         hidden_size = args.hidden_size
         output_size = args.output_size
 
-        encoder = nn.Sequential(
+        self.encoder = nn.Sequential(
             self.conv_block(input_size[0], hidden_size),
             self.conv_block(hidden_size, hidden_size),
             self.conv_block(hidden_size, hidden_size),
@@ -57,8 +58,8 @@ class ProtoNet(nn.Module):
         acc_val = torch.eq(y_hat, target_inds.squeeze()).float().mean()
 
         return loss_val, {
-            'loss': loss_val.item(),
-            'acc': acc_val.item()
+            'loss': loss_val.item(),   #for trace
+            'accuracy': acc_val.item()
         }
 
 
