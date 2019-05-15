@@ -1,7 +1,9 @@
 import torch
+import sys
 
 
 def get_dataloader(args):
+    sys.path.append(args.dataset_path)
     if args.dataset == 'omniglot':
         import omniglot_loader
         loader = omniglot_loader
@@ -9,10 +11,9 @@ def get_dataloader(args):
         raise ValueError("Unknown dataset: {:s}".format(args.dataset))
 
     if args.state == 'train':
-        if args.dataset == 'omniglot':
-            data = loader.load(args, args.splits)
+        data = loader.loader(args, args.train_split_mode)
     else:
-        data = loader.load(args, ['test'])
+        data = loader.loader(args, ['test'])
 
     return data
 

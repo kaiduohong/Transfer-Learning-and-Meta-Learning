@@ -3,6 +3,7 @@ import torch.nn.functional as F
 from torch.autograd import Variable
 from few_shot_learning.common.config import args
 from common.utils import euclidean_dist
+from base.factory import register_model
 
 
 @register_model('protonet_conv')
@@ -61,7 +62,7 @@ class ProtoNet(nn.Module):
         }
 
 
-    def conv_block(in_channels, out_channels):
+    def conv_block(self, in_channels, out_channels):
         return nn.Sequential(
             nn.Conv2d(in_channels, out_channels, 3, padding=1), #3*3
             nn.BatchNorm2d(out_channels),

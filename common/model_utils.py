@@ -1,6 +1,4 @@
 from tqdm import tqdm
-
-
 from base import get_model
 
 def load(opt):

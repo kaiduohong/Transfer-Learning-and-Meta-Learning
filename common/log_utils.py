@@ -17,7 +17,7 @@ class LogManager(object):
         log_format = '%(asctime)s %(message)s'
         logging.basicConfig(stream=sys.stdout, level=logging.INFO,
                             format=log_format, datefmt='%m/%d %I:%M:%S %p')
-        fh = logging.FileHandler(os.path.join(log_filename, 'log.txt'))
+        fh = logging.FileHandler(log_filename + '_log.txt')
         fh.setFormatter(logging.Formatter(log_format))
         logging.getLogger().addHandler(fh)
 
@@ -41,7 +41,7 @@ class LogManager(object):
 
     def save_opt(self, opt):
         if not isinstance(opt,dict):
-            opt = opt.to_dir
+            opt = opt.to_dict()
         with open(os.path.join(self.logs_dir, '{}-opt.json'.format(self.cur_time())), 'w') as f:
             json.dump(opt, f)
             f.write('\n')

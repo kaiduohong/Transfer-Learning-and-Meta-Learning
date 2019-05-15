@@ -1,7 +1,7 @@
 import os
 import torch
 import threading
-from Transfer_Learning_and_Meta_Learning.common.settiing import BASE_ROOT, DATA_ROOT
+from common.setting import BASE_ROOT, DATA_ROOT
 
 FEW_SHOT_LEARNING_BASE_ROOT = os.path.dirname(os.path.dirname(__file__)) #few_shot_learning
 MODEL_ROOT = os.path.join(BASE_ROOT,'model')
@@ -32,12 +32,13 @@ class arguments(object):
         self.dataset_path = os.path.join(DATA_ROOT, self.dataset)
         self.split_path = os.path.join(self.dataset_path, 'splits')
         self.splits = 'vinyals'
+        self.train_split_mode = ['train','val']
         self.sequential = False
         self.train_way = 60
         self.train_shot = 5
-        self.query = 5
+        self.train_query = 5
         self.test_way = 5
-        self.test_shot = self.train_shot_n
+        self.test_shot = self.train_shot
         self.test_query = 15
         self.train_episodes = 100
         self.test_episodes = 100
@@ -69,7 +70,7 @@ class arguments(object):
         self.model_filename = self.model_name + '.pht'
         self.log_filename = 'log.txt'
         self.trace_filename = 'trace.json'
-
+        self.check_dir(res_dir, self.models_dir, self.logs_dir, self.trace_dir)
 
 
     # sigleton
@@ -79,6 +80,12 @@ class arguments(object):
                 if not hasattr(arguments, "_instance"):
                     arguments._instance = object.__new__(cls)
         return arguments._instance
+
+    def check_dir(self,*dirs):
+        for d in dirs:
+            if not os.path.exists(d):
+                os.mkdir(d) 
+                print('dir {} is not exist and it is made now'.format(d))
 
     def to_dict(self):
         d = {}

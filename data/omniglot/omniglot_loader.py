@@ -81,7 +81,7 @@ def extract_episode(n_support, n_query, d):
 
 def loader(opt, splits):
 
-    split_dir = os.path.join(opt.data_path, 'splits', opt.split)
+    split_dir = os.path.join(opt.dataset_path, 'splits', opt.splits)
 
     ret = { }
     for split in splits:
@@ -97,7 +97,7 @@ def loader(opt, splits):
             n_episodes = opt.train_episodes
 
         transforms = [partial(convert_dict, 'class'),
-                      partial(load_class_images, opt.data_path),
+                      partial(load_class_images, opt.dataset_path),
                       partial(extract_episode, n_support, n_query)]
 
         if opt.cuda:

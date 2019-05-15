@@ -1,1 +1,1 @@
-from  factory import register_model, get_model
+from base.factory import get_model

@@ -1,35 +1,38 @@
 
 import os
 import sys
-sys.path.append()
-sys.path.append('../../../')
-print(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
+sys.path.append('.')
 sys.path.append(os.path.dirname('..'))
+sys.path.append('../../../../')
+sys.path.append('../../../')
 
 
 import torch
 
 
-from Transfer_Learning_and_Meta_Learning.common import data_utils, model_utils, utils, train, eval
+from common import data_utils, model_utils,log_utils, utils, train, eval
 from few_shot_learning.common import config
+from few_shot_learning.prototypical_network.network import prototypical_net
 
 
 def main():
     args = config.arguments()
-    logger = utils.LogManager(args)
+    logger = log_utils.LogManager(args)
     net = model_utils.load(args)
     args.optim_config = {'lr': args.learning_rate,
      'weight_decay': args.weight_decay}
     if args.cuda:
-        os.environ["CUDA_VISIBLE_DEVICES"] = args.cuda_devide
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(args.cuda_devide)
 
     torch.manual_seed(args.random_seed)
     if args.cuda:
         torch.cuda.manual_seed(args.random_seed)
         net = net.cuda()
 
-    train_dataloader = data_utils.dataloader('train')
-    test_dataloader = data_utils.dataloader('test')
+    args.state = 'train'
+    train_dataloader = data_utils.get_dataloader(args)
+    args.state = 'test'
+    test_dataloader = data_utils.get_dataloader(args)
 
     print('begin training')
     train.train(net, train_dataloader, logger, args)
