@@ -1,8 +1,8 @@
 from tqdm import tqdm
 from base import get_model
 
-def load(opt):
-    return get_model(opt.model_name, opt)
+def load(model_name,*args):
+    return get_model(model_name, *args)
 
 def evaluate(model, data_loader, meters, desc=None):
     model.eval()

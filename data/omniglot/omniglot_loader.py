@@ -79,9 +79,13 @@ def extract_episode(n_support, n_query, d):
         'xq': xq
     }
 
-def loader(opt, splits):
+def loader(opt):
 
-    split_dir = os.path.join(opt.data_path, 'splits', opt.split)
+    split_dir = os.path.join(opt.split_dir, opt.split_name)
+    if opt.state == 'train':
+        splits = opt.train_split_mode
+    else:
+        splits = ['test']
 
     ret = { }
     for split in splits:

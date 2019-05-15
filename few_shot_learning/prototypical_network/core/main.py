@@ -18,7 +18,7 @@ from few_shot_learning.prototypical_network.network import prototypical_net
 def main():
     args = config.arguments()
     logger = log_utils.LogManager(args)
-    net = model_utils.load(args)
+    net = model_utils.load(args.model_name)
     args.optim_config = {'lr': args.learning_rate,
      'weight_decay': args.weight_decay}
     if args.cuda:

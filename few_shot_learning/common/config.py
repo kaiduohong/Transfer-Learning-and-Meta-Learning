@@ -29,9 +29,9 @@ class arguments(object):
         #data args
         #self.resplit = False
         self.dataset = 'omniglot'
-        self.dataset_path = os.path.join(DATA_ROOT, self.dataset)
-        self.split_path = os.path.join(self.dataset_path, 'splits')
-        self.splits = 'vinyals'
+        self.dataset_dir = os.path.join(DATA_ROOT, self.dataset)
+        self.split_dir = os.path.join(self.dataset_dir, 'splits')
+        self.split_name = 'vinyals'
         self.train_split_mode = ['train','val']
         self.sequential = False
         self.train_way = 60
