@@ -101,7 +101,7 @@ def loader(opt):
             n_episodes = opt.train_episodes
 
         transforms = [partial(convert_dict, 'class'),
-                      partial(load_class_images, opt.data_path),
+                      partial(load_class_images, opt.dataset_dir),
                       partial(extract_episode, n_support, n_query)]
 
         if opt.cuda:

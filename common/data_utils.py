@@ -3,7 +3,7 @@ import sys
 
 
 def get_dataloader(args):
-    sys.path.append(args.dataset_path)
+    sys.path.append(args.dataset_dir)
     if args.dataset == 'omniglot':
         import omniglot_loader
         loader = omniglot_loader
@@ -11,7 +11,7 @@ def get_dataloader(args):
         raise ValueError("Unknown dataset: {:s}".format(args.dataset))
 
     if args.state == 'train':
-        data = loader.loader(args, args.train_split_mode)
+        data = loader.loader(args)
     else:
         data = loader.loader(args, ['test'])
 
