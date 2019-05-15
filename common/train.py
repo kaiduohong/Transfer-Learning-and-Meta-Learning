@@ -78,7 +78,7 @@ def train(network, dataloader, logger, args):
             else:
                 hook_state['wait'] += 1
 
-                if hook_state['wait'] > args.patiant:
+                if hook_state['wait'] > args.patient:
                     print("==> patience {:d} exceeded".format(args.patience))
                     state['stop'] = True
         else:

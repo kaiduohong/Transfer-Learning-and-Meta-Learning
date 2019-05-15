@@ -1,0 +1,6 @@
+{"train": {"loss": 0.5271656477451324, "accuracy": 0.8469000187516214}, "val": {"loss": 0.04736760628715274, "accuracy": 0.9826666796207428}, "epoch": 1, "msg": "state=train"}
+{"train": {"loss": 0.2201558639109135, "accuracy": 0.9336000198125833}, "val": {"loss": 0.033245357611267526, "accuracy": 0.98840000808239}, "epoch": 2, "msg": "state=train"}
+{"train": {"loss": 0.16554503671824933, "accuracy": 0.9520333606004715}, "val": {"loss": 0.02636405154189561, "accuracy": 0.9924000072479244}, "epoch": 3, "msg": "state=train"}
+{"train": {"loss": 0.15058126971125607, "accuracy": 0.9555666953325269}, "val": {"loss": 0.023966784188232854, "accuracy": 0.9921333384513856}, "epoch": 4, "msg": "state=train"}
+{"train": {"loss": 0.12823960337787865, "accuracy": 0.9614333611726762}, "val": {"loss": 0.013098701967310267, "accuracy": 0.9958666706085209}, "epoch": 5, "msg": "state=train"}
+{"train": {"loss": 0.12098144892603159, "accuracy": 0.9653333646059035}, "val": {"loss": 0.014421793834460468, "accuracy": 0.9950666713714599}, "epoch": 6, "msg": "state=train"}
