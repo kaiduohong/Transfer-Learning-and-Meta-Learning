@@ -8,7 +8,7 @@ from base.factory import register_model
 
 @register_model('protonet_conv')
 class ProtoNet(nn.Module):
-    def __init__(self,opt=None):
+    def __init__(self):
         super(ProtoNet, self).__init__()
 
         input_size = args.input_size
