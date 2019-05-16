@@ -5,8 +5,7 @@ import sys
 def get_dataloader(args):
     sys.path.append(args.dataset_dir)
     if args.dataset == 'omniglot':
-        import omniglot_loader
-        loader = omniglot_loader
+        import omniglot_loader as loader
     else:
         raise ValueError("Unknown dataset: {:s}".format(args.dataset))
 

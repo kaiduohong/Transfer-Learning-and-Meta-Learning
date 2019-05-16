@@ -6,9 +6,8 @@ def load(model_name,*args):
 
 def evaluate(model, data_loader, meters, desc=None):
     model.eval()
-
-    for field,meter in meters.items():
-        meter.reset()
+    for field, meter in meters.items(): 
+         meter.reset()
 
     #设置进度条
     if desc is not None:

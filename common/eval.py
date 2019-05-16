@@ -14,8 +14,7 @@ def eval(net, test_dataloader, logger, args):
         args.test_way, args.test_shot, args.test_query, args.test_episodes ))
 
     meters = {'test':{ field: tnt.meter.AverageValueMeter() for field in args.trace_fields }}
-
-    model_utils.evaluate(net, test_dataloader['test'], meters, desc="test")
+    model_utils.evaluate(net, test_dataloader['test'], meters['test'], desc="test")
 
     meter_vals = log_utils.extract_meter_values(meters)
 
