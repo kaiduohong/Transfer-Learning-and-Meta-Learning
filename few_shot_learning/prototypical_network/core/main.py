@@ -20,7 +20,7 @@ def main():
     logger = log_utils.LogManager(args)
     net = model_utils.load(args.model_name)
     if args.cuda:
-        os.environ["CUDA_VISIBLE_DEVICES"] = str(args.cuda_devide)
+        torch.cuda.set_device(args.cuda_devide)
 
     torch.manual_seed(args.random_seed)
     if args.cuda:

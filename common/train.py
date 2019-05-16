@@ -79,7 +79,7 @@ def train(network, dataloader, logger, args):
                 hook_state['wait'] += 1
 
                 if hook_state['wait'] > args.patient:
-                    print("==> patience {:d} exceeded".format(args.patience))
+                    print("==> patience {:d} exceeded".format(args.patient))
                     state['stop'] = True
         else:
             state['model'].cpu()
